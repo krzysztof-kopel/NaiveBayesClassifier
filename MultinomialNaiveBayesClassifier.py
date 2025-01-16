@@ -32,7 +32,7 @@ class MultinomialNaiveBayesClassifier:
         """Funkcja podobna do Trait.calculate_probabilities - zamienia class_probabilities ze słownika zliczającego
         wystąpienia poszczególnych klas na słownik prawdopodobieństw"""
         sum_of_counts = sum(self.class_probabilities.values())
-        self.class_probabilities = {cls: value / sum_of_counts for cls, value in self.class_probabilities}
+        self.class_probabilities = {cls: value / sum_of_counts for cls, value in self.class_probabilities.items()}
 
     def fit(self, training_set: list[list[str]]):
         """Funkcja służąca do trenowania klasyfikatora na przykładowych danych"""
@@ -40,6 +40,8 @@ class MultinomialNaiveBayesClassifier:
             current_mushroom_class = mushroom[0]
             self.class_probabilities[current_mushroom_class] += 1
             for i, trait_value in enumerate(mushroom[1:]):
+                if trait_value == "?":
+                    continue
                 self.traits[i].probabilities[current_mushroom_class][trait_value] += 1
 
         self.calculate_class_probabilities()
@@ -58,9 +60,9 @@ def set_up(data: list[list[str]]) -> MultinomialNaiveBayesClassifier:
     for i in range(1, len(data[0])):
         trait_name = data[0][i]
         trait_values = set()
-        for j in range(1, len(data[i])):
-            if data[i][j] != '?':
-                trait_values.add(data[i][j])
+        for j in range(1, len(data)):
+            if data[j][i] != '?':
+                trait_values.add(data[j][i])
         traits.append(Trait(trait_name, list(classes), list(trait_values)))
 
     return MultinomialNaiveBayesClassifier(list(classes), traits)
