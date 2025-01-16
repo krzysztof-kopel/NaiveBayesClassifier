@@ -45,3 +45,22 @@ class MultinomialNaiveBayesClassifier:
         self.calculate_class_probabilities()
         for trait in self.traits:
             trait.calculate_probabilities()
+
+
+def set_up(data: list[list[str]]) -> MultinomialNaiveBayesClassifier:
+    """Funkcja przygotowuje klasyfikator na podstawie danych z podanego pliku, ale go nie trenuje (w tym celu należy wywołać
+    funkcję fit)"""
+    classes = set()
+    for i in range(1, len(data)):
+        classes.add(data[i][0])
+
+    traits = []
+    for i in range(1, len(data)):
+        trait_name = data[0][i]
+        trait_values = set()
+        for j in range(1, len(data[i])):
+            if data[i][j] != '?':
+                trait_values.add(data[i][j])
+        traits.append(Trait(trait_name, list(classes), list(trait_values)))
+
+    return MultinomialNaiveBayesClassifier(list(classes), traits)
