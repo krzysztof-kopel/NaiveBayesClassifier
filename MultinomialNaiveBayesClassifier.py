@@ -55,7 +55,7 @@ def set_up(data: list[list[str]]) -> MultinomialNaiveBayesClassifier:
         classes.add(data[i][0])
 
     traits = []
-    for i in range(1, len(data)):
+    for i in range(1, len(data[0])):
         trait_name = data[0][i]
         trait_values = set()
         for j in range(1, len(data[i])):
