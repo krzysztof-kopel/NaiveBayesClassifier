@@ -25,7 +25,7 @@ class MultinomialNaiveBayesClassifier:
 
         self.traits = traits
 
-        self.class_probabilities = {cls: 0 for cls in classes}
+        self.class_probabilities = {cls: 1 for cls in classes}
         # p(c_i), prawdopodobieństwo przynależności do danej klasy (a priori)
 
     def calculate_class_probabilities(self):
@@ -34,3 +34,14 @@ class MultinomialNaiveBayesClassifier:
         sum_of_counts = sum(self.class_probabilities.values())
         self.class_probabilities = {cls: value / sum_of_counts for cls, value in self.class_probabilities}
 
+    def fit(self, training_set: list[list[str]]):
+        """Funkcja służąca do trenowania klasyfikatora na przykładowych danych"""
+        for mushroom in training_set:
+            current_mushroom_class = mushroom[0]
+            self.class_probabilities[current_mushroom_class] += 1
+            for i, trait_value in enumerate(mushroom[1:]):
+                self.traits[i].probabilities[current_mushroom_class][trait_value] += 1
+
+        self.calculate_class_probabilities()
+        for trait in self.traits:
+            trait.calculate_probabilities()
