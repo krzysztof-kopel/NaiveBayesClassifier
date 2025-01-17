@@ -3,15 +3,11 @@
 Implementacja klasyfikatora oparta na założeniu niezależności cech oraz rozkładzie Gaussa. Klasyfikator został zaprojektowany do klasyfikacji danych ciągłych.
 Poniżej opisuję wersję programu, które nie wykorzystuje wbudowanych bibliotek dla funkcji fit, predict oraz predict_proba. Wykorzystałem jednak wbudowane narzędzia w osobnym pliku w celu lepszej analizy wyników niż sama dokładność.
 
----
-
 ## Funkcjonalności
 
 - **Trenowanie modelu** (`fit`): Dopasowanie klasyfikatora do danych treningowych.
 - **Przewidywanie klas** (`predict`): Przewidywanie etykiet dla nowych danych.
 - **Prawdopodobieństwo klas** (`predict_proba`): Obliczanie prawdopodobieństw przynależności danych do klas.
-
----
 
 ## Wymagania
 
@@ -24,8 +20,6 @@ Zainstaluj wymagane pakiety za pomocą:
 ```bash
 pip install numpy scikit-learn
 ```
-
----
 
 ## Jak używać
 
@@ -67,8 +61,6 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Dokładność modelu: {accuracy * 100:.2f}%")
 ```
 
----
-
 ## Opis metod
 
 ### Konstruktor `__init__`
@@ -90,8 +82,6 @@ Inicjalizuje obiekt klasyfikatora i przygotowuje przestrzeń na priory oraz para
   - `X` (ndarray): Dane wejściowe.
 - **Opis**: Oblicza prawdopodobieństwa przynależności do każdej klasy.
 
----
-
 ## Przykładowe dane wejściowe i wyjściowe
 
 ### Dane wejściowe
@@ -109,11 +99,8 @@ y_pred = clf.predict(X)
 print(y_pred)  # Output: [0, 0]
 ```
 
----
 
 ## Analiza wyników programu
-
----
 
 ### **1. Charakterystyka zbioru danych**
 Zbiór danych Iris zawiera:
@@ -127,20 +114,17 @@ Zbiór danych Iris zawiera:
   - **Petal Length (cm)**: Długość płatka,
   - **Petal Width (cm)**: Szerokość płatka.
 
----
 
 ### **2. Podział na zestawy treningowe i testowe**
 Dane zostały podzielone na:
 - **Zestaw treningowy**: 105 próbek (po 35 próbek z każdego gatunku),
 - **Zestaw testowy**: 45 próbek (po 15 próbek z każdego gatunku).
 
----
 
 ### **3. Wyniki klasyfikatora**
 Model osiągnął bardzo wysoką skuteczność:
 - **Dokładność ogólna**: **97.78%** – model poprawnie sklasyfikował 44 z 45 próbek.
 
----
 
 ### **4. Szczegółowa analiza wyników**
 
@@ -162,11 +146,9 @@ Model osiągnął bardzo wysoką skuteczność:
 Model błędnie zaklasyfikował jedną próbkę:
 - Jedna próbka `Iris-virginica` została błędnie przypisana do `Iris-versicolor`. Po analizie danych z wykorzystaniem box plotów oraz kwartyli jestem w stanie stwierdzić wartość odstającą dla cechy Sepal Lenght próbki o Id 107 i gatunku Iris-virginica.
 
----
 
 ### **5. Wnioski**
 - Model Gaussian Naive Bayes dobrze radzi sobie z klasyfikacją danych Iris, osiągając wysoką dokładność.
 - **`Iris-setosa`** została sklasyfikowana bezbłędnie dzięki wyraźnemu odseparowaniu tej klasy od pozostałych.
 - Większość błędów klasyfikacji wynika z nakładania się cech między klasami `Iris-versicolor` i `Iris-virginica`.
 
----
