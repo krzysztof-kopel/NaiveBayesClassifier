@@ -144,7 +144,8 @@ Model osiągnął bardzo wysoką skuteczność:
 
 #### **Macierz błędów**:
 Model błędnie zaklasyfikował jedną próbkę:
-- Jedna próbka `Iris-virginica` została błędnie przypisana do `Iris-versicolor`. Po analizie danych z wykorzystaniem box plotów oraz kwartyli jestem w stanie stwierdzić wartość odstającą dla cechy Sepal Lenght próbki o Id 107 i gatunku Iris-virginica.
+- Jedna próbka `Iris-virginica` została błędnie przypisana do `Iris-versicolor`.
+- Po analizie danych z wykorzystaniem box plotów oraz kwartyli jestem w stanie stwierdzić wartość odstającą dla cechy `Sepal Length` próbki o `Id 107` i gatunku `Iris-virginica`.
 
 
 ### **5. Wnioski**
