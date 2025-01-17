@@ -17,3 +17,6 @@ fit(self, training_set) - metoda pozwalająca na trenowanie klasyfikatora, przyj
 predict_proba(self, data_vector) - zwraca prawdopodobieństwo przynależności danego grzyba (opisanego listą cech *data_vector*)
 predict(self, data_vector) - zwraca klasę (w formie stringa) do której prawdopodobnie należy grzyb opisywany przez data_vector.
 Dokładny opis opis znajduje się w komentarzach w kodzie w pliku MultinomialNaiveBayesClassifier.py.
+
+## Klasyfikator do zmiennych ciągłych
+Pełna dokumentacja w pliku **GaussianClassifierREADME.md**
