@@ -48,6 +48,22 @@ class MultinomialNaiveBayesClassifier:
         for trait in self.traits:
             trait.calculate_probabilities()
 
+    def predict_proba(self, data_vector: list[str]) -> dict[str, float]:
+        """Dla danego wektora danych (jeden wektor to wypisane po kolei cechy jednego, konkretnego grzyba) funkcja zwraca
+        prawdopodobieństwa przynależności do każdej klasy"""
+        result = dict()
+        for cls in self.classes:
+            current_class_probability = self.class_probabilities[cls]
+            for i, trait_value in enumerate(data_vector):
+                current_class_probability *= self.traits[i].probabilities[cls][trait_value]
+            result[cls] = current_class_probability
+        return result
+
+    def predict(self, data_vector: list[str]) -> str:
+        """Funkcja zwraca klasę, do której prawdopodobnie należy dany grzyb (reprezentowany jako wektor danych)"""
+        data_class_probabilities = self.predict_proba(data_vector)
+        return max(data_class_probabilities, key=data_class_probabilities.get)
+
 
 def set_up(data: list[list[str]]) -> MultinomialNaiveBayesClassifier:
     """Funkcja przygotowuje klasyfikator na podstawie danych z podanego pliku, ale go nie trenuje (w tym celu należy wywołać
