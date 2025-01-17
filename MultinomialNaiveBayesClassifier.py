@@ -36,6 +36,7 @@ class MultinomialNaiveBayesClassifier:
 
     def fit(self, training_set: list[list[str]]):
         """Funkcja służąca do trenowania klasyfikatora na przykładowych danych"""
+        self.__reset_probabilities__()
         for mushroom in training_set:
             current_mushroom_class = mushroom[0]
             self.class_probabilities[current_mushroom_class] += 1
@@ -55,6 +56,8 @@ class MultinomialNaiveBayesClassifier:
         for cls in self.classes:
             current_class_probability = self.class_probabilities[cls]
             for i, trait_value in enumerate(data_vector):
+                if trait_value == '?':
+                    continue
                 current_class_probability *= self.traits[i].probabilities[cls][trait_value]
             result[cls] = current_class_probability
         return result
@@ -63,6 +66,16 @@ class MultinomialNaiveBayesClassifier:
         """Funkcja zwraca klasę, do której prawdopodobnie należy dany grzyb (reprezentowany jako wektor danych)"""
         data_class_probabilities = self.predict_proba(data_vector)
         return max(data_class_probabilities, key=data_class_probabilities.get)
+
+    def __reset_probabilities__(self) -> None:
+        """Funkcja resetuje prawdopodobieństwa wszystkich cech i ustawia liczniki na 1 (tak, żeby można było najpierw zliczyć
+        wystąpienia poszczególnych cech w czasie treningu, a potem obliczyć prawdopodobieństwo"""
+        for cls in self.class_probabilities.keys():
+            self.class_probabilities[cls] = 1
+        for trait in self.traits:
+            for cls in trait.probabilities.keys():
+                for value in trait.probabilities[cls].keys():
+                    trait.probabilities[cls][value] = 1
 
 
 def set_up(data: list[list[str]]) -> MultinomialNaiveBayesClassifier:
